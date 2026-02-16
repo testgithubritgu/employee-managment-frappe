@@ -8,7 +8,7 @@ function App() {
   return (
 	<div className="App">
 	  <FrappeProvider>
-		<div>dfsdf
+		<div>
 	  <div>
 		<a href="https://vitejs.dev" target="_blank">
 		  <img src="/vite.svg" className="logo" alt="Vite logo" />
