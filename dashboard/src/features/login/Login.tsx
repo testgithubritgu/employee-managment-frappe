@@ -1,6 +1,6 @@
-import React from 'react'
+import type { FC } from "react"
 
-const Login = () => {
+const Login:FC = () => {
   return (
     <div>
       this is login boss
