@@ -58,11 +58,32 @@ export const FrappeAPI = {
     name: string,
     fields?: string[],
   ): Promise<unknown> => {
-    const response = await apiClient.get(`/api/resource/${doctype}/${name}`, {
-      data: {
-        fields: JSON.stringify(fields),
+    const response = await apiClient.get(
+      `/api/resource/${encodeURIComponent(doctype)}/${encodeURIComponent(name)}`,
+      {
+        params: {
+          fields: fields ? JSON.stringify(fields) : undefined,
+        },
       },
-    });
+    );
+
+    return response.data;
+  },
+
+  getDocumentList: async (
+    doctype: string,
+    fields?: string[],
+    limit_page_length: number = 10,
+  ): Promise<unknown> => {
+    const response = await apiClient.get(
+      `/api/resource/${encodeURIComponent(doctype)}`,
+      {
+        params: {
+          fields: fields ? JSON.stringify(fields) : undefined,
+          limit_page_length,
+        },
+      },
+    );
 
     return response.data;
   },
