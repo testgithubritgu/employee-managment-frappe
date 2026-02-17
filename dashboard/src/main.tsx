@@ -12,13 +12,13 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-    <FrappeProvider>
-      <QueryClientProvider client={queryClient}>
+      <FrappeProvider>
+        <QueryClientProvider client={queryClient}>
 
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </FrappeProvider>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </FrappeProvider>
     </BrowserRouter>
   </StrictMode>,
 )
