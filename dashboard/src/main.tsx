@@ -14,7 +14,6 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <FrappeProvider>
         <QueryClientProvider client={queryClient}>
-
           <App />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
