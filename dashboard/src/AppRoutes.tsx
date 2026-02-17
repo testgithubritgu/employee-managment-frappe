@@ -2,6 +2,7 @@ import { Suspense, useEffect, type JSX } from "react"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./features/login/Login"
 import { useFrappeAuth } from "frappe-react-sdk"
+import Home from "./features/landing-page/Home"
 
 
 
@@ -10,7 +11,8 @@ type isRouteActive = boolean
 type RouteConfig = Array<[string, JSX.Element, isRouteActive]>
 
 const pageRoute: RouteConfig = [
-  ["/login", <Login />, true]
+  ["/login", <Login />, true],
+  ["/", <Home />, true],
 ]
 
 
