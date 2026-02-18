@@ -15,8 +15,6 @@ const pageRoute: RouteConfig = [
   ["/", <Home />, true],
 ]
 
-
-
 const AppRoutes = () => {
   const { isLoading, currentUser } = useFrappeAuth()
   const navigate = useNavigate()
