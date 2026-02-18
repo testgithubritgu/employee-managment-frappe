@@ -1,4 +1,4 @@
-import { FrappeAPI } from "../services/FrappeApi";
+import { FrappeAPI } from "../lib/FrappeApi";
 
 export const getDoc = async <T = any>(
   doctype: string,
