@@ -21,7 +21,6 @@ const AuthContextProvider:FC<Props> = ({ children }) => {
     },[currentUser])
   return (
     <AuthContext.Provider value={{auth}}>
-
       {children}
     </AuthContext.Provider>
   )

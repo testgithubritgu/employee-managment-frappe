@@ -1,3 +1,4 @@
+import { Button } from "../../components/ui/button"
 import { useAddNote } from "../../hooks/useAddNote"
 
 
@@ -17,9 +18,9 @@ const Home = () => {
   return (
     <div>
       this is home bhai
-      <button onClick={()=>addNote()}>
+      <Button onClick={()=>addNote()}>
         add notes bhai
-      </button>
+      </Button>
     </div>
   )
 }
