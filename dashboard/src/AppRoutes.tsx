@@ -20,9 +20,9 @@ const AppRoutes = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (isLoading) return
-    const guestRoutes: string[] = ["/"]
+    const guestRoutes: string[] = ["/dashboard"]
     if (!currentUser && !guestRoutes.includes(window.location.pathname)) {
-      navigate("/login")
+      navigate("/dashboard/login")
     }
     navigate(window.location.pathname)
   }, [isLoading, currentUser])

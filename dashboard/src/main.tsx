@@ -6,11 +6,14 @@ import { FrappeProvider } from 'frappe-react-sdk'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter } from 'react-router-dom'
+import ErrorBoundary from './app-boundries/Error.tsx'
 
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <ErrorBoundary>
+
     <BrowserRouter>
       <FrappeProvider>
         <QueryClientProvider client={queryClient}>
@@ -19,5 +22,6 @@ createRoot(document.getElementById('root')!).render(
         </QueryClientProvider>
       </FrappeProvider>
     </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 )

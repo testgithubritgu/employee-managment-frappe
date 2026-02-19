@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react"
 
 const Home = () => {
-
+ 
   const [startDate, setStartDate] = useState(new Date());
   const count = useSelector((state: RootState) => state.counter.value)
   const today = new Date()
@@ -31,7 +31,7 @@ const Home = () => {
         <Test />
       </div>
       <h1>react date picker
-        <DatePicker  minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: any) => setStartDate(date)} />
+        <DatePicker minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: any) => setStartDate(date)} />
       </h1>
     </div>
   )

@@ -35,7 +35,7 @@ const getLoginErrorMessage = (error: unknown): string => {
 
 const Login: FC = () => {
     const { login, isLoading } = useFrappeAuth()
-    const  navigate = useNavigate()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -55,8 +55,8 @@ const Login: FC = () => {
                 username: data.name,
                 password: data.password,
             })
-            navigate("/")
-          
+            navigate("/dashboard")
+
         } catch (error: unknown) {
             setError("root", {
                 type: "server",
@@ -112,12 +112,12 @@ const Login: FC = () => {
                             {isLoading || isSubmitting ? "Submitting..." : "Submit"}
                         </Button>
                     </form>
-                        <CardFooter className="flex-col gap-2">
-                           
-                            <Button variant="outline" className="w-full" type="button">
-                                Login with Google
-                            </Button>
-                        </CardFooter>
+                    <CardFooter className="flex-col gap-2">
+
+                        <Button variant="outline" className="w-full" type="button">
+                            Login with Google
+                        </Button>
+                    </CardFooter>
                 </CardContent>
             </Card>
         </div>
