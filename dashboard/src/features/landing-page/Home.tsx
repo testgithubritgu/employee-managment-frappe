@@ -3,23 +3,19 @@ import { Button } from "../../components/ui/button"
 import type { RootState } from "../../app-store/store"
 import { increament } from "../../app-store/slice/counterSlice"
 import Test from "./components/testing"
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react"
 
 const Home = () => {
-  // const {mutate} = useAddNote()
 
-  // const addNote = ()=>{
-  //   mutate({
-  //     title:"this is content from home page",
-  //     details:"this is content boss"
-  //   },
-  // {
-  //   onSuccess:()=>{
-  //     console.log('bhai success ho gaya')
-  //   }
-  // })
-  // }
-  const count = useSelector((state:RootState)=> state.counter.value)
+  const [startDate, setStartDate] = useState(new Date());
+  const count = useSelector((state: RootState) => state.counter.value)
+  const today = new Date()
+  const yesterday = new Date()
+  yesterday.setDate(today.getDate() - 10)
+  console.log(startDate)
   const dispatch = useDispatch()
   return (
     <div>
@@ -29,11 +25,14 @@ const Home = () => {
       </Button>
       <div>
         <p>{count}</p>
-        <Button onClick={() => dispatch(increament())}>
+        <Button className="cursor-pointer" onClick={() => dispatch(increament())}>
           increament count
         </Button>
-        <Test/>
+        <Test />
       </div>
+      <h1>react date picker
+        <DatePicker  minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: any) => setStartDate(date)} />
+      </h1>
     </div>
   )
 }

@@ -8,7 +8,6 @@ const App = () => {
 		<>
 			<AuthContextProvider>
 				<Provider store={store}>
-
 					<AppRoutes />
 				</Provider>
 			</AuthContextProvider>
