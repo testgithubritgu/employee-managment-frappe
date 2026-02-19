@@ -4,10 +4,27 @@ import type { RootState } from "../../app-store/store"
 import { increament } from "../../app-store/slice/counterSlice"
 import Test from "./components/testing"
 import DatePicker from "react-datepicker";
-
+import { collection, addDoc } from "firebase/firestore"; 
+import { useEffect, useState } from "react"
+import { db } from "../../services/firebase.js"
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {storage} from "../../services/firebase"
+export const uploadImage = async (file: File) => {
 
+  if (!file) return;
+
+  // storage path
+  const imageRef = ref(storage, `images/${Date.now()}-${file.name}`);
+
+  // upload
+  const snapshot = await uploadBytes(imageRef, file);
+
+  // get public URL
+  const downloadURL = await getDownloadURL(snapshot.ref);
+
+  return downloadURL;
+};
 const Home = () => {
  
   const [startDate, setStartDate] = useState(new Date());
@@ -17,6 +34,37 @@ const Home = () => {
   yesterday.setDate(today.getDate() - 10)
   console.log(startDate)
   const dispatch = useDispatch()
+  const [file, setFile] = useState<File | null>(null);
+  const [url, setUrl] = useState<string | undefined>("");
+
+  const handleUpload = async () => {
+    if (!file) return alert("Select image first");
+
+    const imageUrl = await uploadImage(file);
+    setUrl(imageUrl);
+  };
+
+  const addUserData = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        name: "John Doe",
+        email: "john@example.com",
+        createdAt: startDate
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  useEffect(()=>{
+    document.addEventListener("keydown",(key)=>{
+      if(key.key === "Enter"){
+        console.log("this is enter")
+      }
+    })
+    addUserData().then((res)=>console.log("this is added docs in firbase",res))
+  },[])
   return (
     <div>
       this is home bhai
@@ -33,6 +81,23 @@ const Home = () => {
       <h1>react date picker
         <DatePicker minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: any) => setStartDate(date)} />
       </h1>
+
+      <h2>Upload Image</h2>
+      <br />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+      />
+
+      <button onClick={handleUpload}>Upload</button>
+
+      {url && (
+        <div>
+          <p>Uploaded Image:</p>
+          <img src={url} alt="uploaded" width={200} />
+        </div>
+      )}
     </div>
   )
 }
