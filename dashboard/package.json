@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/my_app/dashboard/ && yarn copy-html-entry",
+    "build": "vite build --base=/assets/my_app/dashboard/ --outDir=../my_app/public/dashboard && yarn copy-html-entry",
     "lint": "eslint .",
     "preview": "vite preview",
     "copy-html-entry": "cp ../my_app/public/dashboard/index.html ../my_app/www/dashboard.html"
