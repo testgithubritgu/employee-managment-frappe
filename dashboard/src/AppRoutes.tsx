@@ -11,8 +11,8 @@ type isRouteActive = boolean
 type RouteConfig = Array<[string, JSX.Element, isRouteActive]>
 
 const pageRoute: RouteConfig = [
-  ["/login", <Login />, true],
-  ["/", <Home />, true],
+  ["/dashboard/login", <Login />, true],
+  ["/dashboard", <Home />, true],
 ]
 
 const AppRoutes = () => {
@@ -22,7 +22,6 @@ const AppRoutes = () => {
     if (isLoading) return
     const guestRoutes: string[] = ["/"]
     if (!currentUser && !guestRoutes.includes(window.location.pathname)) {
-
       navigate("/login")
     }
     navigate(window.location.pathname)
