@@ -13,29 +13,28 @@ import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { useFrappeAuth } from "frappe-react-sdk"
 import { useNavigate } from "react-router-dom"
-
 export const FormSchema = z.object({
     name: z.string().min(1, { message: "Username is required" }),
-    password: z.string().min(2, { message: "Password must be at least 8 characters" }),
+    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
     image: z
-        .any()
-        .refine((file) => file?.length === 1, "Image is required")
+        .instanceof(FileList)
+        .refine((files) => files.length === 1, "Image is required")
         .refine(
-            (file) => file?.[0]?.size <= 2 * 1024 * 1024,
+            (files) => files[0].size <= 2 * 1024 * 1024,
             "Max image size is 2MB"
         )
         .refine(
-            (file) =>
-                ["image/jpeg", "image/png", "image/webp"].includes(file?.[0]?.type),
+            (files) =>
+                ["image/jpeg", "image/png", "image/webp"].includes(files[0].type),
             "Only JPG, PNG, WEBP allowed"
         ),
 })
 
 export type FormValues = z.infer<typeof FormSchema>
-
+type Loading = boolean
 const getLoginErrorMessage = (error: unknown): string => {
     if (error && typeof error === "object") {
         const apiError = error as { message?: string; exception?: string }
@@ -53,20 +52,26 @@ const Login: FC = () => {
         register,
         handleSubmit,
         setError,
+        control,
         formState: { errors, isSubmitting },
     } = useForm<FormValues>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: "",
             password: "",
+            image: undefined,
         },
     })
 
     const onSubmit = async (data: FormValues) => {
         try {
-            const imageFile = data.image[0] // 👈 actual file
+            // const imageFile = data.image[0] // 👈 actual file
 
-            console.log("Image File:", imageFile)
+            //upload to cloudinary image
+            // const uploadRes = await uploadToCloudinary(imageFile)
+
+            // console.log("Cloudinary URL:", uploadRes.secure_url)
+            // console.log("Image File:", imageFile)
             await login({
                 username: data.name,
                 password: data.password,
@@ -80,7 +85,7 @@ const Login: FC = () => {
             })
         }
     }
-    const isBusy = isLoading || isSubmitting
+    const isBusy:Loading = isLoading || isSubmitting
     return (
         <div className="flex h-screen items-center justify-center">
             <Card className="w-full max-w-sm">
@@ -109,26 +114,31 @@ const Login: FC = () => {
                                 {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">User Image</Label>
-                                <Input
-                                   
-                                    disabled={isBusy}
-                                    id="image"
-                                    type="file"
-                                    accept="image/*"
-                                    {...register("image", (e)=>{
-                                            const file = e.target.files?.[0]
-                                            if(file){
-                                                setPreview(URL.createObjectURL(file))
-                                            }
-                                    })}
-                                  
+                                <Label htmlFor="image">User Image</Label>
+                                <Controller
+                                    name="image"
+                                    control={control}
+                                    render={({ field: { onChange } }) => (
+                                        <Input
+                                            disabled={isBusy}
+                                            id="image"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                onChange(e.target.files)
+                                                const file = e.target.files?.[0]
+                                                if (file) {
+                                                    setPreview(URL.createObjectURL(file))
+                                                }
+                                            }}
+                                        />
+                                    )}
                                 />
                                 {preview && (
                                     <img
-                                    src={preview}
-                                    alt="preview"
-                                    className="h-24 w-24 rounded-md object-cover border"
+                                        src={preview}
+                                        alt="preview"
+                                        className="h-24 w-24 rounded-md object-cover border"
                                     />
                                 )}
                                 {errors.image && <p className="text-sm text-red-600">{errors.image.message}</p>}

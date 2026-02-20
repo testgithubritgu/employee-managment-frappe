@@ -1,6 +1,7 @@
 import { Suspense, useEffect, type JSX } from "react"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./features/login/Login"
+import  FirebaseAuht from "./features/firbase-auth/login"
 import { useFrappeAuth } from "frappe-react-sdk"
 import Home from "./features/landing-page/Home"
 
@@ -12,6 +13,7 @@ type RouteConfig = Array<[string, JSX.Element, isRouteActive]>
 
 const pageRoute: RouteConfig = [
   ["/dashboard/login", <Login />, true],
+  ["/dashboard/firebase-login", <FirebaseAuht />, true],
   ["/dashboard", <Home />, true],
 ]
 
@@ -20,7 +22,7 @@ const AppRoutes = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (isLoading) return
-    const guestRoutes: string[] = ["/dashboard"]
+    const guestRoutes: string[] = ["/dashboard", "/dashboard/firebase-login"]
     if (!currentUser && !guestRoutes.includes(window.location.pathname)) {
       navigate("/dashboard/login")
     }
