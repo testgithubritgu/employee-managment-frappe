@@ -1,4 +1,4 @@
-import type { FC } from "react"
+import { useState, type FC } from "react"
 import {
     Card,
     CardAction,
@@ -20,6 +20,18 @@ import { useNavigate } from "react-router-dom"
 export const FormSchema = z.object({
     name: z.string().min(1, { message: "Username is required" }),
     password: z.string().min(2, { message: "Password must be at least 8 characters" }),
+    image: z
+        .any()
+        .refine((file) => file?.length === 1, "Image is required")
+        .refine(
+            (file) => file?.[0]?.size <= 2 * 1024 * 1024,
+            "Max image size is 2MB"
+        )
+        .refine(
+            (file) =>
+                ["image/jpeg", "image/png", "image/webp"].includes(file?.[0]?.type),
+            "Only JPG, PNG, WEBP allowed"
+        ),
 })
 
 export type FormValues = z.infer<typeof FormSchema>
@@ -35,6 +47,7 @@ const getLoginErrorMessage = (error: unknown): string => {
 
 const Login: FC = () => {
     const { login, isLoading } = useFrappeAuth()
+    const [preview, setPreview] = useState<string | null>(null)
     const navigate = useNavigate()
     const {
         register,
@@ -51,6 +64,9 @@ const Login: FC = () => {
 
     const onSubmit = async (data: FormValues) => {
         try {
+            const imageFile = data.image[0] // 👈 actual file
+
+            console.log("Image File:", imageFile)
             await login({
                 username: data.name,
                 password: data.password,
@@ -91,6 +107,31 @@ const Login: FC = () => {
                                     placeholder="username or email"
                                 />
                                 {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">User Image</Label>
+                                <Input
+                                   
+                                    disabled={isBusy}
+                                    id="image"
+                                    type="file"
+                                    accept="image/*"
+                                    {...register("image", (e)=>{
+                                            const file = e.target.files?.[0]
+                                            if(file){
+                                                setPreview(URL.createObjectURL(file))
+                                            }
+                                    })}
+                                  
+                                />
+                                {preview && (
+                                    <img
+                                    src={preview}
+                                    alt="preview"
+                                    className="h-24 w-24 rounded-md object-cover border"
+                                    />
+                                )}
+                                {errors.image && <p className="text-sm text-red-600">{errors.image.message}</p>}
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
