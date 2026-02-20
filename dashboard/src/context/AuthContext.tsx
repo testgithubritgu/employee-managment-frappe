@@ -7,7 +7,6 @@ interface AppContext {
     auth?: string | null | undefined
     authLoading: boolean
     login: (credentials: AuthCredentials) => Promise<AuthResponse>
-   
 }
 
 const AuthContext = createContext<AppContext | undefined>(undefined)
