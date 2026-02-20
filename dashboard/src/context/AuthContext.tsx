@@ -36,3 +36,4 @@ export const useAuthContext = ():AppContext=>{
 }
 
 export default AuthContextProvider
+// this is without trash 
