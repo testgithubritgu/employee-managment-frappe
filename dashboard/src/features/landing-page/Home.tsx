@@ -58,6 +58,8 @@ const Home = () => {
   // this is first stash 
 
   // this is secont 
+
+  // this is third 
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
