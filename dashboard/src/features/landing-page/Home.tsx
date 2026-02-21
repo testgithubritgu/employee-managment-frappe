@@ -12,6 +12,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../services/firebase"
 import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
+
+//CHECKING STASH..........
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
