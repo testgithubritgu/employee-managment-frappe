@@ -54,14 +54,14 @@ const Home = () => {
   const [url, setUrl] = useState<string | undefined>("");
   const [value,setValue] = useState<number>(0)
   const valueDebounce = useDebounce(value,1000)
-  console.log(value)
+
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
     const imageUrl = await uploadImage(file);
     setUrl(imageUrl);
   };
-  console.timeLog("parnet")
+
   const addUserData = async () => {
     
     try {
