@@ -14,6 +14,8 @@ import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
 
 //CHECKING STASH..........
+// 1
+
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
