@@ -13,11 +13,7 @@ import { storage } from "../../services/firebase"
 import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
 
-// this is first stash 
 
-// this is 2nd stash 
-
-// this is 3rd stash 
 
 export const uploadImage = async (file: File) => {
 
@@ -35,10 +31,6 @@ export const uploadImage = async (file: File) => {
   return downloadURL;
 };
 
-// this is first stash 
-// this is second stash 
-
-// this is after stash 
 
 const Home = () => {
   //to check time for completion of this function
@@ -55,9 +47,7 @@ const Home = () => {
   const [value,setValue] = useState<number>(0)
   const valueDebounce = useDebounce(value,1000)
 
-  // this is first stash 
 
-  // this is secont 
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
