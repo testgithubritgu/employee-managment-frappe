@@ -56,8 +56,8 @@ const Home = () => {
   const valueDebounce = useDebounce(value,1000)
 
   // this is first stash 
-  
 
+  // this is secont 
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
