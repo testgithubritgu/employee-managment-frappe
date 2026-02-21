@@ -27,6 +27,10 @@ export const uploadImage = async (file: File) => {
 
   return downloadURL;
 };
+
+// this is first stash 
+// this is second stash 
+
 const Home = () => {
   //to check time for completion of this function
   console.time("parent")
