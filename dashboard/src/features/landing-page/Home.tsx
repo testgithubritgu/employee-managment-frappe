@@ -74,11 +74,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", (key) => {
-      if (key.key === "Enter") {
-        console.log("this is enter")
-      }
-    })
     addUserData().then((res) => console.log("this is added docs in firbase", res))
   }, [])
   return (
