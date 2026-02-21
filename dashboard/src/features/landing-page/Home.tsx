@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "../../components/ui/button"
-import type { RootState } from "../../app-store/store"
+import type { AppDispatch, RootState } from "../../app-store/store"
 import { increament } from "../../app-store/slice/counterSlice"
 import Test from "./components/testing"
 import DatePicker from "react-datepicker";
-import { collection, addDoc } from "firebase/firestore";
-import { useEffect, useState } from "react"
-import { db } from "../../services/firebase.js"
+import { useState } from "react"
 import "react-datepicker/dist/react-datepicker.css";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../services/firebase"
@@ -20,62 +18,55 @@ import { Input } from "../../components/ui/input.js"
 // 3 
 
 export const uploadImage = async (file: File) => {
+  if (!file) throw new Error("No file");
 
-  if (!file) return;
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Only images allowed");
+  }
 
-  // storage path
-  const imageRef = ref(storage, `images/${Date.now()}-${file.name}`);
+  if (file.size > 2 * 1024 * 1024) {
+    throw new Error("Max 2MB allowed");
+  }
 
-  // upload
+  const imageRef = ref(storage, `images/${crypto.randomUUID()}-${file.name}`);
   const snapshot = await uploadBytes(imageRef, file);
 
-  // get public URL
-  const downloadURL = await getDownloadURL(snapshot.ref);
-
-  return downloadURL;
+  return getDownloadURL(snapshot.ref);
 };
-
 
 const Home = () => {
   //to check time for completion of this function
-  console.time("parent")
+
   const [startDate, setStartDate] = useState(new Date());
   const count = useSelector((state: RootState) => state.counter.value)
-  const today = new Date()
-  const yesterday = new Date()
-  yesterday.setDate(today.getDate() - 10)
-  console.log(startDate)
-  const dispatch = useDispatch()
+  const today = new Date();
+
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 10);
+ 
+  const dispatch = useDispatch < AppDispatch>()
   const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState<string | undefined>("");
   const [value,setValue] = useState<number>(0)
   const valueDebounce = useDebounce(value,1000)
 
 
+  const [uploading, setUploading] = useState(false);
+
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
-    const imageUrl = await uploadImage(file);
-    setUrl(imageUrl);
-  };
-
-  const addUserData = async () => {
-    
     try {
-      const docRef = await addDoc(collection(db, "users"), {
-        name: "John Doe",
-        email: "john@example.com",
-        createdAt: startDate
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      setUploading(true);
+      const imageUrl = await uploadImage(file);
+      setUrl(imageUrl);
+    } catch (err: any) {
+      alert(err.message);
+    } finally {
+      setUploading(false);
     }
   };
 
-  useEffect(() => {
-    addUserData().then((res) => console.log("this is added docs in firbase", res))
-  }, [])
   return (
     <div>
       this is home bhai
@@ -90,7 +81,9 @@ const Home = () => {
         <Test />
       </div>
       <h1>react date picker
-        <DatePicker minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: any) => setStartDate(date)} />
+        <DatePicker minDate={yesterday} maxDate={today} dateFormat={"dd/MM/yyyy"} selected={startDate} onChange={(date: Date | null) => {
+          if (date) setStartDate(date);
+        }} />
       </h1>
 
       <h2>Upload Image</h2>
@@ -101,7 +94,9 @@ const Home = () => {
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
 
-      <button onClick={handleUpload}>Upload</button>
+      <button disabled={uploading} onClick={handleUpload}>
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
 
       {url && (
         <div>
