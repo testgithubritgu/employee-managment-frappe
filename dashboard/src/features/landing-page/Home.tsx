@@ -4,12 +4,14 @@ import type { RootState } from "../../app-store/store"
 import { increament } from "../../app-store/slice/counterSlice"
 import Test from "./components/testing"
 import DatePicker from "react-datepicker";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { db } from "../../services/firebase.js"
 import "react-datepicker/dist/react-datepicker.css";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {storage} from "../../services/firebase"
+import { storage } from "../../services/firebase"
+import useDebounce from "../../hooks/useDebounce.js"
+import { Input } from "../../components/ui/input.js"
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
@@ -26,7 +28,8 @@ export const uploadImage = async (file: File) => {
   return downloadURL;
 };
 const Home = () => {
- 
+  //to check time for completion of this function
+  console.time("parent")
   const [startDate, setStartDate] = useState(new Date());
   const count = useSelector((state: RootState) => state.counter.value)
   const today = new Date()
@@ -36,15 +39,18 @@ const Home = () => {
   const dispatch = useDispatch()
   const [file, setFile] = useState<File | null>(null);
   const [url, setUrl] = useState<string | undefined>("");
-
+  const [value,setValue] = useState<number>(0)
+  const valueDebounce = useDebounce(value,1000)
+  console.log(value)
   const handleUpload = async () => {
     if (!file) return alert("Select image first");
 
     const imageUrl = await uploadImage(file);
     setUrl(imageUrl);
   };
-
+  console.timeLog("parnet")
   const addUserData = async () => {
+    
     try {
       const docRef = await addDoc(collection(db, "users"), {
         name: "John Doe",
@@ -57,14 +63,14 @@ const Home = () => {
     }
   };
 
-  useEffect(()=>{
-    document.addEventListener("keydown",(key)=>{
-      if(key.key === "Enter"){
+  useEffect(() => {
+    document.addEventListener("keydown", (key) => {
+      if (key.key === "Enter") {
         console.log("this is enter")
       }
     })
-    addUserData().then((res)=>console.log("this is added docs in firbase",res))
-  },[])
+    addUserData().then((res) => console.log("this is added docs in firbase", res))
+  }, [])
   return (
     <div>
       this is home bhai
@@ -98,7 +104,16 @@ const Home = () => {
           <img src={url} alt="uploaded" width={200} />
         </div>
       )}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Input onChange={(e) => setValue(Number(e.target.value) )} type="number" />
+      <h1>this is without debounce: {value}</h1>
+      <h1>this is debounced number : {valueDebounce}</h1>
     </div>
+
   )
 }
 
