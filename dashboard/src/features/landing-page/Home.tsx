@@ -13,14 +13,7 @@ import { storage } from "../../services/firebase"
 import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
 
-//CHECKING STASH..........
-// 1
 
-// this is first stash 
-
-// this is second stash 
-
-// this is 3rd stash 
 
 export const uploadImage = async (file: File) => {
 
