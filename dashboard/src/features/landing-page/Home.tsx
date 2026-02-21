@@ -16,11 +16,9 @@ import { Input } from "../../components/ui/input.js"
 //CHECKING STASH..........
 // 1
 
-<<<<<<< Updated upstream
-// 2 
+// this is first stash 
 
-=======
->>>>>>> Stashed changes
+
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
