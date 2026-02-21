@@ -16,6 +16,8 @@ import { Input } from "../../components/ui/input.js"
 //CHECKING STASH..........
 // 1
 
+// 2 
+
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
