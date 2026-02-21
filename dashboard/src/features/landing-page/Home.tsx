@@ -17,6 +17,8 @@ import { Input } from "../../components/ui/input.js"
 
 // 2 
 
+// 3 
+
 export const uploadImage = async (file: File) => {
 
   if (!file) return;
