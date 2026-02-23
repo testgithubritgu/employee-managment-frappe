@@ -1,4 +1,4 @@
-import { useMemo, useState, type JSX } from "react";
+import { useMemo, type JSX } from "react";
 import { Chart } from 'react-charts'
 function DynamicChart(): JSX.Element {
     const data = useMemo(

@@ -16,6 +16,10 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
       "@canvasjs/charts": path.resolve(__dirname, "src/shims/canvasjs-charts.js"),
+      "react-charts": path.resolve(
+        __dirname,
+        "node_modules/react-charts/dist/react-charts.min.mjs"
+      ),
     },
   },
   build: {
