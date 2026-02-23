@@ -1,12 +1,27 @@
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/clerk-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { Loader2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+const getInitials = (name: string) => {
+    if (!name || name === "undefined") return "";
 
-export default function Navbar(){
+    const parts = name.trim().split(/\s+/); // 🔥 handles multiple spaces
+
+    if (parts.length === 1) {
+        return parts[0][0].toUpperCase();
+    }
+
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+export default function Navbar() {
     const [open, setOpen] = useState(false);
+    const { userDetails, docLoading } = useAuthContext()
+    
+const intialState = useMemo(()=>getInitials(userDetails?.full_name ?? ""),[])
 
     return (
-                  
-        <nav className ="container w-full z-500 shadow-2xl bg-white border-b border-gray-200">
+
+        <nav className="container w-full z-500 shadow-2xl bg-white border-b border-gray-200">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex items-center justify-between h-16">
 
@@ -14,25 +29,34 @@ export default function Navbar(){
                         Dev<span className="text-indigo-600">Brand</span>
                     </div>
 
-                   
+
                     <div className="hidden md:flex items-center space-x-8">
-                        <SignedOut>
-                            <SignInButton />
-                            <SignUpButton />
-                        </SignedOut>
-                        <SignedIn>
+
                         {["Home", "Features", "Pricing", "Contact"].map((item) => (
                             <a
-                            key={item}
-                            href="#"
-                            className="text-gray-600 hover:text-indigo-600 transition font-medium"
+                                key={item}
+                                href="#"
+                                className="text-gray-600 hover:text-indigo-600 transition font-medium"
                             >
                                 {item}
                             </a>
                         ))}
-                        <UserButton />
-                      
-                        </SignedIn>
+
+                        {docLoading ? <Loader2 className="size-4 animate-spin" /> :
+                            <>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <div className="w-7 h-7 p-3 flex justify-center items-center cursor-pointer bg-gray-300 rounded-full">
+                                            {intialState}
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent >
+                                        {userDetails?.full_name}
+                                    </TooltipContent>
+                                </Tooltip>
+                            </>
+                        }
+
                     </div>
                     <button
                         onClick={() => setOpen(!open)}
@@ -67,7 +91,8 @@ export default function Navbar(){
                             </a>
                         ))}
 
-                        <button className="w-full py-2 rounded-lg bg-indigo-600 text-white">
+                        <button aria-label="Toggle menu"
+                            aria-expanded={open} className="w-full py-2 rounded-lg bg-indigo-600 text-white">
                             Login
                         </button>
                     </div>

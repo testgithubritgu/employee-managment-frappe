@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from './app-boundries/Error.tsx'
 import { ClerkProvider } from "@clerk/clerk-react"
+import { TooltipProvider } from './components/ui/tooltip.tsx'
 const queryClient = new QueryClient()
 
 // Import your Publishable Key
@@ -25,8 +26,10 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <FrappeProvider>
         <QueryClientProvider client={queryClient}>
+  <TooltipProvider>
 
           <App />
+  </TooltipProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </FrappeProvider>
