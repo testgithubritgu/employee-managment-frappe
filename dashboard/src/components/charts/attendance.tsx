@@ -1,33 +1,40 @@
-import { useState, type JSX } from "react";
-import CanvasJSReact from "@canvasjs/react-charts";
-
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
+import { useMemo, useState, type JSX } from "react";
+import { Chart } from 'react-charts'
 function DynamicChart(): JSX.Element {
-    const [dataPoints, setDataPoints] = useState([
-        { label: "Jan", y: 10 },
-        { label: "Feb", y: 15 },
-        { label: "Mar", y: 25 }
-    ]);
-
-    const options = {
-        title: { text: "Monthly Growth" },
-        data: [
+    const data = useMemo(
+        () => [
             {
-                type: "line",
-                dataPoints
+                label: 'Series 1',
+                data: [[0, 1], [1, 2], [2, 4], [3, 2], [4, 7]]
+            },
+            {
+                label: 'Series 2',
+                data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
             }
-        ]
-    };
+        ],
+        []
+    )
+
+    const axes = useMemo(
+        () => [
+            { primary: true, type: 'linear', position: 'bottom' },
+            { type: 'linear', position: 'left' }
+        ],
+        []
+    )
+
+   
 
     return (
         <>
-            <CanvasJSChart options={options} />
-            <button onClick={() =>
-                setDataPoints([...dataPoints, { label: "Apr", y: 30 }])
-            }>
-                Add Data
-            </button>
+            <div
+                style={{
+                    width: '400px',
+                    height: '300px'
+                }}
+            >
+                <Chart data={data} axes={axes} />
+            </div>
         </>
     );
 }

@@ -18,7 +18,7 @@ import { useFrappeAuth } from "frappe-react-sdk"
 import { useNavigate } from "react-router-dom"
 export const FormSchema = z.object({
     name: z.string().min(1, { message: "Username is required" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
+    password: z.string().min(3, { message: "Password must be at least 8 characters" }),
     image: z
         .instanceof(FileList)
         .refine((files) => files.length === 1, "Image is required")
