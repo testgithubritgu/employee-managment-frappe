@@ -6,7 +6,9 @@ import { useFrappeAuth } from "frappe-react-sdk"
 import Home from "./features/landing-page/Home"
 import Attendance from "./features/employe-attendance/Attendance"
 
+// load lazy 
 const Navbar = lazy(() => import("./components/commen/Navbar")) 
+const YtConverter = lazy(() => import("./features/yt-mp3/YtConverter")) 
 
 type isRouteActive = boolean
 
@@ -17,6 +19,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/firebase-login", <FirebaseAuht />, true],
   ["/dashboard", <Home />, true],
   ["/dashboard/attendance", <Attendance />, true],
+  ["/dashboard/yt-mp3", <YtConverter/>, true],
 ]
 
 const AppRoutes = () => {

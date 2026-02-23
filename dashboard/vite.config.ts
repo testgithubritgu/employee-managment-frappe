@@ -15,7 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "@canvasjs/charts": path.resolve(__dirname, "src/shims/canvasjs-charts.js"),
+     
       "performance-now": path.resolve(
         __dirname,
         "src/shims/performance-now.js"
