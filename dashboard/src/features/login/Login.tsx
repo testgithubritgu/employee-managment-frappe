@@ -30,7 +30,7 @@ export const FormSchema = z.object({
             (files) =>
                 ["image/jpeg", "image/png", "image/webp"].includes(files[0].type),
             "Only JPG, PNG, WEBP allowed"
-        ),
+        ).optional(),
 })
 
 export type FormValues = z.infer<typeof FormSchema>
@@ -85,7 +85,7 @@ const Login: FC = () => {
             })
         }
     }
-    const isBusy:Loading = isLoading || isSubmitting
+    const isBusy: Loading = isLoading || isSubmitting
     return (
         <div className="flex h-screen items-center justify-center">
             <Card className="w-full max-w-sm">
@@ -122,6 +122,7 @@ const Login: FC = () => {
                                         <Input
                                             disabled={isBusy}
                                             id="image"
+
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) => {

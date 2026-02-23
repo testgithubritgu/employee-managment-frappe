@@ -10,12 +10,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../services/firebase"
 import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
-//edit this one
-// 1
-
-// 2 
- 
-// 3 
 
 export const uploadImage = async (file: File) => {
   if (!file) throw new Error("No file");
@@ -68,7 +62,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto px-4">
       this is home bhai
       <Button >
         add notes bhai
