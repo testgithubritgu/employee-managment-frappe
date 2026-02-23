@@ -62,7 +62,7 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="mx-auto w-full max-w-7xl px-6 py-4">
       this is home bhai
       <Button >
         add notes bhai
