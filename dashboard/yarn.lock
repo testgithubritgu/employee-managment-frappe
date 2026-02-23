@@ -266,6 +266,11 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
+"@canvasjs/react-charts@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@canvasjs/react-charts/-/react-charts-1.0.2.tgz#56b1fa72018522240ce03106426f4ee57959112f"
+  integrity sha512-PZgJlDbGdMF4AN/KvrvGY9X50EByJMZ7MHfQB/U0aky9Onn9mt0CpsvwudBsBe+DofaV3SHR4SHn/Wfo/pubDw==
+
 "@clerk/clerk-react@^5.61.1":
   version "5.61.1"
   resolved "https://registry.npmjs.org/@clerk/clerk-react/-/clerk-react-5.61.1.tgz"

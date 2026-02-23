@@ -4,6 +4,7 @@ import Login from "./features/login/Login"
 import  FirebaseAuht from "./features/firbase-auth/login"
 import { useFrappeAuth } from "frappe-react-sdk"
 import Home from "./features/landing-page/Home"
+import Attendance from "./features/employe-attendance/Attendance"
 
 const Navbar = lazy(() => import("./components/commen/Navbar")) 
 
@@ -15,6 +16,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/login", <Login />, true],
   ["/dashboard/firebase-login", <FirebaseAuht />, true],
   ["/dashboard", <Home />, true],
+  ["/dashboard/attendance", <Attendance />, true],
 ]
 
 const AppRoutes = () => {

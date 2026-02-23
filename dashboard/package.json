@@ -11,6 +11,7 @@
     "copy-html-entry": "cp ../my_app/public/dashboard/index.html ../my_app/www/dashboard.html"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.2",
     "@clerk/clerk-react": "^5.61.1",
     "@cloudinary/react": "^1.14.4",
     "@cloudinary/url-gen": "^1.22.0",
