@@ -25,7 +25,7 @@
     "clsx": "^2.1.1",
     "firebase": "^12.9.0",
     "frappe-react-sdk": "^1.14.0",
-    "lucide-react": "^0.568.0",
+    "lucide-react": "^0.575.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
     "react-datepicker": "^9.1.0",
