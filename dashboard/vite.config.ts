@@ -20,6 +20,7 @@ export default defineConfig({
         __dirname,
         "src/shims/performance-now.js"
       ),
+      "react-is": path.resolve(__dirname, "src/shims/react-is.js"),
       "react-charts": path.resolve(
         __dirname,
         "node_modules/react-charts/dist/react-charts.min.mjs"
