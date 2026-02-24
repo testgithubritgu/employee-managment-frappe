@@ -5,6 +5,7 @@ import  FirebaseAuht from "./features/firbase-auth/login"
 import { useFrappeAuth } from "frappe-react-sdk"
 import Home from "./features/landing-page/Home"
 import Attendance from "./features/employe-attendance/Attendance"
+import PaginationDemo from "./features/pagination/PaginationDemo"
 
 // load lazy 
 const Navbar = lazy(() => import("./components/commen/Navbar")) 
@@ -20,6 +21,8 @@ const pageRoute: RouteConfig = [
   ["/dashboard", <Home />, true],
   ["/dashboard/attendance", <Attendance />, true],
   ["/dashboard/yt-mp3", <YtConverter/>, true],
+  ["/dashboard/yt-mp3", <YtConverter/>, true],
+  ["/dashboard/pagination", <PaginationDemo/>, true],
 ]
 
 const AppRoutes = () => {
@@ -39,6 +42,7 @@ const AppRoutes = () => {
     <Suspense fallback={<div className="flex items-center justify-center">Loading...</div>}>
       {!disableNavbar.includes(window.location.pathname) && <Navbar />}
       <Routes>
+        <Route  path="*" element={<p>No Routes Available.........</p>}/>
         {pageRoute.map(
           ([path, element, isRouteActive]) =>
             isRouteActive && (
