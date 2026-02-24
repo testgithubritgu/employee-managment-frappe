@@ -8,22 +8,22 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    port: 8080,
+    port: 5173,
     host: "0.0.0.0",
     proxy: proxyOptions,
   },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-     
+
       "performance-now": path.resolve(
         __dirname,
-        "src/shims/performance-now.js"
+        "src/shims/performance-now.js",
       ),
       "react-is": path.resolve(__dirname, "src/shims/react-is.js"),
       "react-charts": path.resolve(
         __dirname,
-        "node_modules/react-charts/dist/react-charts.min.mjs"
+        "node_modules/react-charts/dist/react-charts.min.mjs",
       ),
     },
   },
