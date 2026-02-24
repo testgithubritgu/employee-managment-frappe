@@ -21,8 +21,8 @@ const intialState = useMemo(()=>getInitials(userDetails?.full_name ?? ""),[])
 
     return (
 
-        <nav className="container w-full z-500 shadow-2xl bg-white border-b border-gray-200">
-            <div className="max-w-7xl mx-auto px-6">
+        <nav className=" w-full z-500 shadow-2xl bg-white border-b border-gray-200">
+            <div className="">
                 <div className="flex items-center justify-between h-16">
 
                     <div className="text-xl font-bold ">
@@ -32,7 +32,7 @@ const intialState = useMemo(()=>getInitials(userDetails?.full_name ?? ""),[])
 
                     <div className="hidden md:flex items-center space-x-8">
 
-                        {["Home", "Features", "Pricing", "Contact"].map((item) => (
+                        {["Home", "Features", "Pricing", "Contact"].map((item: string) => (
                             <a
                                 key={item}
                                 href="#"
