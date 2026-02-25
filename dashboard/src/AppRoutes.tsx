@@ -6,6 +6,7 @@ import { useFrappeAuth } from "frappe-react-sdk"
 import Home from "./features/landing-page/Home"
 import Attendance from "./features/employe-attendance/Attendance"
 import PaginationDemo from "./features/pagination/PaginationDemo"
+import ProtectedRoute from "./components/protect-route/ProtectedRoutes"
 
 // load lazy 
 const Navbar = lazy(() => import("./components/commen/Navbar"))
@@ -14,10 +15,10 @@ const Calculator = lazy(() => import("./features/calculator/Calculator"))
 
 type isRouteActive = boolean
 
-type RouteConfig = Array<[string, JSX.Element, isRouteActive]>
+type RouteConfig = Array<[string, JSX.Element, isRouteActive ,string[]?]>
 
 const pageRoute: RouteConfig = [
-  ["/dashboard/login", <Login />, true],
+  ["/dashboard/login", <Login />, true  ],
   ["/dashboard/firebase-login", <FirebaseAuht />, true],
   ["/dashboard", <Home />, true],
   ["/dashboard/attendance", <Attendance />, true],
@@ -49,12 +50,14 @@ const AppRoutes = () => {
       <Routes>
         <Route path="*" element={<p>No Routes Available.........</p>} />
         {pageRoute.map(
-          ([path, element, isRouteActive]) =>
+          ([path, element, isRouteActive, roles]) =>
             isRouteActive && (
               <Route
                 key={path}
                 path={path}
-                element={element}
+                element={roles ? <ProtectedRoute allowedRoles={roles}>
+                  {element }
+                </ProtectedRoute> : element}
               />
             )
         )}

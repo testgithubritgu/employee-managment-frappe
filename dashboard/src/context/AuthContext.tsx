@@ -16,6 +16,7 @@ interface AppContext {
     userDetails: UserDoc | null
     docLoading: boolean
     hasRole: () => (role: string) => boolean
+    userRoles:string[]
 }
 
 const AuthContext = createContext<AppContext | undefined>(undefined)
@@ -42,7 +43,7 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
     }, [userDetails])
 
     return (
-        <AuthContext.Provider value={{ auth: currentUser ?? null, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
+        <AuthContext.Provider value={{ auth: currentUser ?? null, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}
         </AuthContext.Provider>
     )
