@@ -74,7 +74,6 @@ const PaginationComp=({ className, ...props }: React.DetailedHTMLProps<React.HTM
                             }}
                         />
                     </PaginationItem>
-
                 </PaginationContent>
             </Pagination>
 

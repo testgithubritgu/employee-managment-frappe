@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 const getInitials = (name: string) => {
     if (!name || name === "undefined") return "";
 
-    const parts = name.trim().split(/\s+/); // 🔥 handles multiple spaces
+    const parts = name.trim().split(/\s+/);
 
     if (parts.length === 1) {
         return parts[0][0].toUpperCase();
@@ -15,9 +15,11 @@ const getInitials = (name: string) => {
 };
 export default function Navbar() {
     const [open, setOpen] = useState(false);
-    const { userDetails, docLoading } = useAuthContext()
+    const { userDetails } = useAuthContext()
+
+    console.log(userDetails )
     
-const intialState = useMemo(()=>getInitials(userDetails?.full_name ?? ""),[])
+    const intialState = useMemo(() => getInitials(userDetails?.full_name ?? ""), [userDetails])
 
     return (
 
@@ -42,7 +44,7 @@ const intialState = useMemo(()=>getInitials(userDetails?.full_name ?? ""),[])
                             </a>
                         ))}
 
-                        {docLoading ? <Loader2 className="size-4 animate-spin" /> :
+                        {!userDetails ? <Loader2 className="size-4 animate-spin" /> :
                             <>
                                 <Tooltip>
                                     <TooltipTrigger>
