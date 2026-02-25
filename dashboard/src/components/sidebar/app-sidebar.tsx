@@ -15,7 +15,6 @@ export function AppSidebar() {
             <SidebarContent>
                 <SidebarGroup >
                     erwer
-
                     sdfsf
                 </SidebarGroup>
                 <SidebarGroup />

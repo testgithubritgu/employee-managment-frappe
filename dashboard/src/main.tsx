@@ -9,7 +9,6 @@ import { BrowserRouter } from 'react-router-dom'
 import ErrorBoundary from './app-boundries/Error.tsx'
 import { ClerkProvider } from "@clerk/clerk-react"
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar.tsx'
 const queryClient = new QueryClient()
 
 // Import your Publishable Key
@@ -21,14 +20,12 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <SidebarProvider>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
         <BrowserRouter>
           <FrappeProvider>
             <QueryClientProvider client={queryClient}>
               <TooltipProvider>
                   {/* <AppSidebar />  */}
-                  <SidebarTrigger />
                 <App />
               </TooltipProvider>
               <ReactQueryDevtools initialIsOpen={false} />
@@ -36,7 +33,6 @@ createRoot(document.getElementById('root')!).render(
           </FrappeProvider>
         </BrowserRouter>
       </ClerkProvider>
-      </SidebarProvider>
     </ErrorBoundary>
   </StrictMode>,
 )
