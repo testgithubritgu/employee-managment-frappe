@@ -1,5 +1,5 @@
-import { useFrappeAuth, useFrappeGetDoc, useFrappeGetDocList, type AuthCredentials, type AuthResponse } from 'frappe-react-sdk'
-import React, { type ReactNode, type FC, createContext, useContext } from 'react'
+import { useFrappeAuth, useFrappeGetDoc, type AuthCredentials, type AuthResponse } from 'frappe-react-sdk'
+import React, { type ReactNode, type FC, createContext, useContext, useMemo, useCallback } from 'react'
 type Props = { children: ReactNode }
 
 interface UserDoc {
@@ -15,34 +15,47 @@ interface AppContext {
     login: (credentials: AuthCredentials) => Promise<AuthResponse>
     userDetails: UserDoc | null
     docLoading: boolean
+    hasRole: () => (role: string) => boolean
 }
 
 const AuthContext = createContext<AppContext | undefined>(undefined)
 
 // type User = string | null | undefined
-
+type UserRole = string[]
 const AuthContextProvider: FC<Props> = ({ children }) => {
-
     const { currentUser, isLoading: authLoading, login } = useFrappeAuth()
-    const { data: userDetails ,isLoading:docLoading} = useFrappeGetDoc(
+    const { data: userDetails, isLoading: docLoading } = useFrappeGetDoc(
         'User',
         currentUser ?? undefined
     );
 
+    const userRoles: UserRole = useMemo(() => (
+        userDetails?.roles?.map((role: any) => (
+            role.role
+        )) || []
+    ), [userDetails])
+
+    const hasRole = useCallback(() => {
+        return (role: string) => {
+            return userRoles.includes(role)
+        }
+    }, [userDetails])
 
     return (
-        <AuthContext.Provider value={{ auth: currentUser ?? null, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
+        <AuthContext.Provider value={{ auth: currentUser ?? null, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}
         </AuthContext.Provider>
     )
 }
 
 export const useAuthContext = (): AppContext => {
-    
+
     const context = useContext(AuthContext)
+
     if (!context) {
         throw new Error("Auth context must be used in Auth context provider")
     }
+    
     return context
 }
 

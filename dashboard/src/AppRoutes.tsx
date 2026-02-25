@@ -36,7 +36,7 @@ const AppRoutes = () => {
     if (!currentUser && !guestRoutes.includes(window.location.pathname) ) {
       navigate("/dashboard/login")
     }
-    if(window.location.pathname === "/dashboard/login"){
+    if (currentUser && window.location.pathname === "/dashboard/login"){
       navigate("/dashboard")
     }
     navigate(window.location.pathname)

@@ -65,13 +65,7 @@ const Login: FC = () => {
 
     const onSubmit = async (data: FormValues) => {
         try {
-            // const imageFile = data.image[0] // 👈 actual file
-
-            //upload to cloudinary image
-            // const uploadRes = await uploadToCloudinary(imageFile)
-
-            // console.log("Cloudinary URL:", uploadRes.secure_url)
-            // console.log("Image File:", imageFile)
+          
             await login({
                 username: data.name,
                 password: data.password,
