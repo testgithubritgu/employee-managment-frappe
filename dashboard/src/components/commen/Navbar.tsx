@@ -15,7 +15,7 @@ const getInitials = (name: string) => {
 };
 export default function Navbar() {
     const [open, setOpen] = useState(false);
-    const { userDetails } = useAuthContext()
+    const { userDetails, authLoading , auth } = useAuthContext()
 
     console.log(userDetails )
     
@@ -44,7 +44,7 @@ export default function Navbar() {
                             </a>
                         ))}
 
-                        {!userDetails ? <Loader2 className="size-4 animate-spin" /> :
+                        {(authLoading && !auth) ? <Loader2 className="size-4 animate-spin" /> :
                             <>
                                 <Tooltip>
                                     <TooltipTrigger>

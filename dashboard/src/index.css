@@ -123,3 +123,16 @@
     @apply bg-background text-foreground;
     }
 }
+
+
+.calci-btn {
+   
+}
+.calci-btn button {
+    padding: 10px 20px ;
+    background-color: rgb(216, 216, 216) ;
+    cursor: pointer;
+    border-radius: 30px;
+    color:  rgb(88, 87, 87);
+
+}

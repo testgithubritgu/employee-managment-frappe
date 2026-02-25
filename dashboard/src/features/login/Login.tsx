@@ -76,7 +76,7 @@ const Login: FC = () => {
                 username: data.name,
                 password: data.password,
             })
-            navigate("/dashboard")
+            window.location.reload()
 
         } catch (error: unknown) {
             setError("root", {
