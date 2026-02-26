@@ -30,6 +30,7 @@ const pageRoute: RouteConfig = [
 const AppRoutes = () => {
   const { isLoading, currentUser } = useFrappeAuth()
   const navigate = useNavigate()
+  console.log('before current user..............................')
   useEffect(() => {
     if (isLoading) return
     const guestRoutes: string[] = ["/dashboard", "/dashboard/firebase-login",]
@@ -43,6 +44,7 @@ const AppRoutes = () => {
   }, [isLoading, currentUser])
 
   const disableNavbar: string[] = [""]
+  console.log('after current user..............................')
   return (
     <Suspense fallback={<div className="flex items-center justify-center">Loading...</div>}>
       {!disableNavbar.includes(window.location.pathname) && <Navbar />}

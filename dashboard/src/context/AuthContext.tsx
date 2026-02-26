@@ -15,8 +15,8 @@ interface AppContext {
     login: (credentials: AuthCredentials) => Promise<AuthResponse>
     userDetails: UserDoc | null
     docLoading: boolean
-    hasRole: () => (role: string) => boolean
-    userRoles:string[]
+    hasRole: (role: string) => boolean
+    userRoles: string[]
 }
 
 const AuthContext = createContext<AppContext | undefined>(undefined)
@@ -30,18 +30,16 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
         currentUser ?? undefined
     );
 
-    const userRoles: UserRole = useMemo(() => (
-        userDetails?.roles?.map((role: any) => (
-            role.role
-        )) || []
-    ), [userDetails])
+    const userRoles: string[] = useMemo(() => {
+        return userDetails?.roles?.map((r: any) => r.role) || [];
+    }, [userDetails]);
 
-    const hasRole = useCallback(() => {
-        return (role: string) => {
+    const hasRole = useCallback(
+        (role: string) => {
             return userRoles.includes(role)
-        }
-    }, [userDetails])
-console.log(userRoles)
+
+        }, [userRoles])
+    console.log(userRoles, 'auth context user roles ........................')
     return (
         <AuthContext.Provider value={{ auth: currentUser ?? null, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}
@@ -56,7 +54,7 @@ export const useAuthContext = (): AppContext => {
     if (!context) {
         throw new Error("Auth context must be used in Auth context provider")
     }
-    
+
     return context
 }
 
