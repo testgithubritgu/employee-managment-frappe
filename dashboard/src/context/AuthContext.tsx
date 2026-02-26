@@ -41,7 +41,7 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
             return userRoles.includes(role)
         }
     }, [userDetails])
-
+console.log(userRoles)
     return (
         <AuthContext.Provider value={{ auth: currentUser ?? null, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}

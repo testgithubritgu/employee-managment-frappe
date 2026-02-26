@@ -13,8 +13,7 @@ const ProtectedRoute: FC<RouteProtect> = ({ children, allowedRoles }) => {
     if (!auth) return <Navigate to="/login" />;
 
     if (
-        allowedRoles &&
-        !allowedRoles.some((role: string) => userRoles.includes(role))
+        allowedRoles && !allowedRoles.some((role: string) => userRoles.includes(role))
     ) {
         return <Navigate to="/unauthorized" />;
     }

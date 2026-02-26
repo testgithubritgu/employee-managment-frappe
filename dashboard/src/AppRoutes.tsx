@@ -20,10 +20,9 @@ type RouteConfig = Array<[string, JSX.Element, isRouteActive ,string[]?]>
 const pageRoute: RouteConfig = [
   ["/dashboard/login", <Login />, true  ],
   ["/dashboard/firebase-login", <FirebaseAuht />, true],
-  ["/dashboard", <Home />, true],
+  ["/dashboard", <Home />, true, ["Administrator"]],
   ["/dashboard/attendance", <Attendance />, true],
-  ["/dashboard/yt-mp3", <YtConverter />, true],
-  ["/dashboard/yt-mp3", <YtConverter />, true],
+  ["/dashboard/yt-mp3", <YtConverter />, true, ["Administrator"]],
   ["/dashboard/pagination", <PaginationDemo />, true],
   ["/dashboard/Calculator", <Calculator />, true],
 ]
@@ -55,7 +54,7 @@ const AppRoutes = () => {
               <Route
                 key={path}
                 path={path}
-                element={roles ? <ProtectedRoute allowedRoles={roles}>
+                element={  Array.isArray(roles) ? <ProtectedRoute allowedRoles={roles}>
                   {element }
                 </ProtectedRoute> : element}
               />
