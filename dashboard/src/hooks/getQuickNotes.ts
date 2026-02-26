@@ -8,3 +8,4 @@ export const useQuickNotes = ( doctype :  string ) => {
     enabled: !!doctype, 
   });
 };
+ 

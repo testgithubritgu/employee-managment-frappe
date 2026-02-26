@@ -13,6 +13,7 @@ const PaginationDemo = lazy(() => import("./features/pagination/PaginationDemo")
 const UnAuthorized = lazy(() => import("./features/unauthorize/UnAuthorized"))
 const YtConverter = lazy(() => import("./features/yt-mp3/YtConverter"))
 const Calculator = lazy(() => import("./features/calculator/Calculator"))
+const Dashboard = lazy(() => import("./features/bar-chart/BarChart"))
 
 type isRouteActive = boolean
 
@@ -27,6 +28,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/pagination", <PaginationDemo />, true],
   ["/dashboard/Calculator", <Calculator />, true],
   ["/dashboard/unauthorized", <UnAuthorized />, true],
+  ["/dashboard/barchart", <Dashboard />, true],
 ]
 
 const AppRoutes = () => {
