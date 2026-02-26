@@ -7,6 +7,7 @@ import Home from "./features/landing-page/Home"
 import Attendance from "./features/employe-attendance/Attendance"
 import PaginationDemo from "./features/pagination/PaginationDemo"
 import ProtectedRoute from "./components/protect-route/ProtectedRoutes"
+import UnAuthorized from "./features/unauthorize/UnAuthorized"
 
 // load lazy 
 const Navbar = lazy(() => import("./components/commen/Navbar"))
@@ -25,6 +26,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/yt-mp3", <YtConverter />, true, ["Administrator"]],
   ["/dashboard/pagination", <PaginationDemo />, true],
   ["/dashboard/Calculator", <Calculator />, true],
+  ["/dashboard/unauthorized", <UnAuthorized />, true],
 ]
 
 const AppRoutes = () => {
