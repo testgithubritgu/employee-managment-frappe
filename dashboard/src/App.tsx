@@ -16,17 +16,15 @@ const App = () => {
 	}, []);
 	return (
 		<>
-			<SidebarProvider>
 			<AuthContextProvider>
 				<Provider store={store}>
 				{/* <AppSidebar /> */}									
-					<AppLayout>
-						<SidebarTrigger />
+				
+						
 					<AppRoutes />
-					</AppLayout>
+					
 				</Provider>
 			</AuthContextProvider>
-			</SidebarProvider>
 		</>
 	)
 

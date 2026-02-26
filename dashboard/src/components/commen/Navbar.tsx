@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { Loader2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const getInitials = (name: string) => {
     if (!name || name === "undefined") return "";
 
@@ -14,7 +14,7 @@ const getInitials = (name: string) => {
 
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
-export default function Navbar() {
+function NavbarComp() {
     const routes = useMemo(() => (
         [
             { path: "/dashboard", name: "Home" },
@@ -27,7 +27,6 @@ export default function Navbar() {
     const { userDetails, authLoading, auth } = useAuthContext()
 
     const intialState = useMemo(() => getInitials(userDetails?.full_name ?? ""), [userDetails])
-
     return (
 
         <nav className=" w-full z-500 shadow-2xl bg-white border-b border-gray-200">
@@ -111,3 +110,6 @@ export default function Navbar() {
         </nav>
     );
 }
+
+const Navbar = memo(NavbarComp)
+export default Navbar
