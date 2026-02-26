@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { Loader2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Link, useNavigate } from "react-router-dom";
 const getInitials = (name: string) => {
     if (!name || name === "undefined") return "";
 
@@ -14,11 +15,18 @@ const getInitials = (name: string) => {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
 export default function Navbar() {
+    const routes = useMemo(() => (
+        [
+            { path: "/dashboard", name: "Home" },
+            { path: "/dashboard/pricing", name: "Pricing" },
+            { path: "/dashboard/features", name: "Features" },
+            { path: "/dashboard/contact", name: "Contact" },
+        ]
+    ), [])
     const [open, setOpen] = useState(false);
-    const { userDetails, authLoading , auth } = useAuthContext()
+    const { userDetails, authLoading, auth } = useAuthContext()
+    console.log(userDetails)
 
-    console.log(userDetails )
-    
     const intialState = useMemo(() => getInitials(userDetails?.full_name ?? ""), [userDetails])
 
     return (
@@ -34,14 +42,15 @@ export default function Navbar() {
 
                     <div className="hidden md:flex items-center space-x-8">
 
-                        {["Home", "Features", "Pricing", "Contact"].map((item: string) => (
-                            <a
-                                key={item}
-                                href="#"
+                        {routes?.map((item) => (
+
+                            <Link
+                                key={item.path}
+                                to={item.path}
                                 className="text-gray-600 hover:text-indigo-600 transition font-medium"
                             >
-                                {item}
-                            </a>
+                                {item.name}
+                            </Link>
                         ))}
 
                         {(authLoading && !auth) ? <Loader2 className="size-4 animate-spin" /> :

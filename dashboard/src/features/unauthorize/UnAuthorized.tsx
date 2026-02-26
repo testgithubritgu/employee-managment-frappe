@@ -9,7 +9,7 @@ const UnAuthorized: FC = () => {
             <div className="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full text-center">
 
                 {/* Icon */}
-                <div className="mx-auto mb-6 relative h-28 w-28 flex items-center justify-center rounded-full border-4 border-red-500">
+                <div className="mx-auto mb -6 relative h-28 w-28 flex items-center justify-center rounded-full border-4 border-red-500">
                     <div className="absolute h-2 w-full bg-red-500 rotate-45"></div>
                     <img
                         src="/unathorized/stop.png"
