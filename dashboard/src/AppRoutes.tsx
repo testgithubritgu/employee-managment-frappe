@@ -1,16 +1,16 @@
 import { lazy, Suspense, useEffect, type JSX } from "react"
-import { Route, Routes, useNavigate } from "react-router-dom"
-import Login from "./features/login/Login"
-import FirebaseAuht from "./features/firbase-auth/login"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { useFrappeAuth } from "frappe-react-sdk"
-import Home from "./features/landing-page/Home"
-import Attendance from "./features/employe-attendance/Attendance"
-import PaginationDemo from "./features/pagination/PaginationDemo"
 import ProtectedRoute from "./components/protect-route/ProtectedRoutes"
-import UnAuthorized from "./features/unauthorize/UnAuthorized"
+import Navbar from "./components/commen/Navbar"
 
-// load lazy 
-const Navbar = lazy(() => import("./components/commen/Navbar"))
+// load lazy
+const Login = lazy(() => import("./features/login/Login"))
+const FirebaseAuht = lazy(() => import("./features/firbase-auth/login"))
+const Home = lazy(() => import("./features/landing-page/Home"))
+const Attendance = lazy(() => import("./features/employe-attendance/Attendance"))
+const PaginationDemo = lazy(() => import("./features/pagination/PaginationDemo"))
+const UnAuthorized = lazy(() => import("./features/unauthorize/UnAuthorized"))
 const YtConverter = lazy(() => import("./features/yt-mp3/YtConverter"))
 const Calculator = lazy(() => import("./features/calculator/Calculator"))
 
@@ -32,24 +32,27 @@ const pageRoute: RouteConfig = [
 const AppRoutes = () => {
   const { isLoading, currentUser } = useFrappeAuth()
   const navigate = useNavigate()
-  console.log('before current user..............................')
+  const { pathname } = useLocation()
+
   useEffect(() => {
     if (isLoading) return
-    const guestRoutes: string[] = ["/dashboard", "/dashboard/firebase-login",]
-    if (!currentUser && !guestRoutes.includes(window.location.pathname) ) {
-      navigate("/dashboard/login")
-    }
-    if (currentUser && window.location.pathname === "/dashboard/login"){
-      navigate("/dashboard")
-    }
-    navigate(window.location.pathname)
-  }, [isLoading, currentUser])
+    const guestRoutes: string[] = ["/dashboard", "/dashboard/login", "/dashboard/firebase-login"]
 
-  const disableNavbar: string[] = [""]
-  console.log('after current user..............................')
+    if (!currentUser && !guestRoutes.includes(pathname)) {
+      navigate("/dashboard/login", { replace: true })
+      return
+    }
+
+    if (currentUser && pathname === "/dashboard/login") {
+      navigate("/dashboard", { replace: true })
+    }
+  }, [isLoading, currentUser, pathname, navigate])
+
+  const disableNavbar: string[] = ["/dashboard/login", "/dashboard/firebase-login"]
+
   return (
     <Suspense fallback={<div className="flex items-center justify-center">Loading...</div>}>
-      {!disableNavbar.includes(window.location.pathname) && <Navbar />}
+      {!disableNavbar.includes(pathname) && <Navbar />}
       <Routes>
         <Route path="*" element={<p>No Routes Available.........</p>} />
         {pageRoute.map(

@@ -39,7 +39,6 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
             return userRoles.includes(role)
 
         }, [userRoles])
-    console.log(userRoles, 'auth context user roles ........................')
     return (
         <AuthContext.Provider value={{ auth: currentUser ?? null, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}

@@ -25,7 +25,6 @@ export default function Navbar() {
     ), [])
     const [open, setOpen] = useState(false);
     const { userDetails, authLoading, auth } = useAuthContext()
-    console.log(userDetails)
 
     const intialState = useMemo(() => getInitials(userDetails?.full_name ?? ""), [userDetails])
 
