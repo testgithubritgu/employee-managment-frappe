@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { EditIcon, Trash } from "lucide-react"
-import { useState } from "react"
+import { Edit, Trash } from "lucide-react"
+import { useMemo, useState } from "react"
 
 const ToDo = () => {
     const [appStage, setAppStage] = useState("Today")
@@ -9,11 +9,18 @@ const ToDo = () => {
         "Pending",
         "OverDue"
     ]
-    const taskArray = [
-        {title:"draft project proposel",time:new Date().getTime()},
-        {title:"Take Trash Out",time:new Date().getTime()},
-        {title:"Get Groceries",time:new Date().getTime()}
-    ]
+    const taskArray =useMemo(()=>(
+        [
+            { title: "draft project proposel", time: new Date().getTime() },
+            { title: "Take Trash Out", time: new Date().getTime() },
+            { title: "Get Groceries", time: new Date().getTime() }
+        ]
+    ),[])
+
+    const onIconClicks = (e:any)=>{
+        console.log(e)
+    }
+
     return (
         <>
             <div className="header flex items-center justify-center text-center text-white py-10 bg-linear-0 from-gray-600 via-gray-800 to-gray-900">
@@ -28,6 +35,33 @@ const ToDo = () => {
                 <div className="flex justify-between items-center w-full">
                     <span className="font-semibold text-2xl">Tasks</span>
                     <Button>Add Task</Button>
+                </div>
+                <div className="mt-6 overflow-x-auto">
+                    <table className="w-full border-separate border-spacing-y-4 ">
+                        <thead className="">
+                            <tr>
+                                <th className=" px-4 py-2 text-left">Task</th>
+                                <th className=" px-4 py-2 text-left">Created Time</th>
+                            </tr>
+                        </thead>
+
+                        <tbody className="space-y-4">
+                            {taskArray.map((task, index) => (
+                                <tr key={index} className="my-4 ">
+                                    <td className="">{task.title}</td>
+                                    <td className="">
+                                        {new Date(task.time).toLocaleString()}
+                                    </td>
+                                    <td>
+                                       <div className="flex justify-center items-center gap-4">
+                                            <Edit onClick={() => onIconClicks(task.title)}  className="size-4 text-blue-600"/>
+                                            <Trash className="size-4 text-red-600"/>
+                                       </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </>

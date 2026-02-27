@@ -40,7 +40,7 @@ const AppRoutes = () => {
 
   useEffect(() => {
     if (isLoading) return
-    const guestRoutes: string[] = ["/dashboard", "/dashboard/login", "/dashboard/firebase-login"]
+    const guestRoutes: string[] = ["/dashboard", "/dashboard/todo", "/dashboard/login", "/dashboard/firebase-login"]
 
     if (!currentUser && !guestRoutes.includes(pathname)) {
       navigate("/dashboard/login", { replace: true })
