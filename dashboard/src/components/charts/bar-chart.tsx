@@ -60,8 +60,8 @@ export default function Dashboard() {
                             <XAxis dataKey="category" />
                             <YAxis />
                             <Tooltip />
-                            <Bar dataKey="group1" fill="#0D9488" />
-                            <Bar dataKey="group2" fill="#2DD4BF" />
+                            <Bar dataKey="group1" fill="#0f9484" />
+                            <Bar dataKey="group2" fill="#2er4BF" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

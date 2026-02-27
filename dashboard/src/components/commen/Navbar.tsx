@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef, useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
-import { Loader, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Link } from "react-router-dom";
 import { useOutsideAlerter } from "@/hooks/useOutsideClick";
@@ -18,7 +18,7 @@ const getInitials = (name: string) => {
 };
 function NavbarComp() {
     const [showUserDropdown, setShowUserDropdown] = useState(false)
-    const [userLoading,setUserLoading] = useState(false)
+    const [userLoading, setUserLoading] = useState(false)
     const routes = useMemo(() => (
         [
             { path: "/dashboard", name: "Home" },
@@ -28,7 +28,7 @@ function NavbarComp() {
         ]
     ), [])
 
-    const logoutUser =async()=>{
+    const logoutUser = async () => {
         try {
             setUserLoading(true)
             await logout()
@@ -39,7 +39,6 @@ function NavbarComp() {
     }
     const [open, setOpen] = useState(false);
     const { userDetails, authLoading, auth, logout } = useAuthContext()
-    console.log(authLoading)
     const wrapperRef = useRef<HTMLDivElement | null>(null);
     useOutsideAlerter(wrapperRef, setShowUserDropdown);
 
@@ -70,7 +69,7 @@ function NavbarComp() {
 
                         {(authLoading && !auth) ? <Loader2 className="size-4 animate-spin" /> :
                             <>
-                                <div ref={wrapperRef} className="relative bg-green-300">
+                                <div ref={wrapperRef} className="relative ">
                                     <Tooltip>
                                         <TooltipTrigger>
                                             <div onClick={() => setShowUserDropdown(!showUserDropdown)} className="w-7 h-7 p-3 flex justify-center items-center cursor-pointer bg-gray-300 rounded-full">
@@ -83,7 +82,7 @@ function NavbarComp() {
                                         </TooltipContent>
                                     </Tooltip>
                                     <div
-                                        className={`absolute -left-[250px] bg-gray-300 min-w-[250px] min-h-[100px]
+                                        className={`absolute -left-62.5 bg-gray-300 min-w-62.5 min-h-[100px]
     transition-all duration-300 origin-top-right
     ${showUserDropdown
                                                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
@@ -91,9 +90,9 @@ function NavbarComp() {
                                             }
   `}
                                     >
-                                        <Button onClick={() => logoutUser()} className="mx-auto block flex items-center justify-center gap-2">
-                                            {userLoading && <Loader2 className="size-4"/>}
-                                            {!userLoading ? "Logout":"loading..."}
+                                        <Button onClick={() => logoutUser()} className="mx-auto cursor-pointer flex items-center justify-center gap-2">
+                                            {userLoading && <Loader2 className="size-4 animate-spin" />}
+                                            {!userLoading ? "Logout" : "loading..."}
                                         </Button>
                                     </div>
                                 </div>
