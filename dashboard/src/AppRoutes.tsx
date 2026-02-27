@@ -3,6 +3,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { useFrappeAuth } from "frappe-react-sdk"
 import ProtectedRoute from "./components/protect-route/ProtectedRoutes"
 import Navbar from "./components/commen/Navbar"
+import ToDo from "./features/to-do-list/ToDo"
 
 // load lazy
 const Login = lazy(() => import("./features/login/Login"))
@@ -29,6 +30,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/Calculator", <Calculator />, true],
   ["/dashboard/unauthorized", <UnAuthorized />, true],
   ["/dashboard/barchart", <Dashboard />, true, ["Administrator"]],
+  ["/dashboard/todo", <ToDo />, true],
 ]
 
 const AppRoutes = () => {
