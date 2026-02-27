@@ -22,13 +22,13 @@ type RouteConfig = Array<[string, JSX.Element, isRouteActive ,string[]?]>
 const pageRoute: RouteConfig = [
   ["/dashboard/login", <Login />, true  ],
   ["/dashboard/firebase-login", <FirebaseAuht />, true],
-  ["/dashboard", <Home />, true, ["Administrator"]],
+  ["/dashboard", <Home />, true],
   ["/dashboard/attendance", <Attendance />, true],
   ["/dashboard/yt-mp3", <YtConverter />, true, ["Administrator"]],
   ["/dashboard/pagination", <PaginationDemo />, true],
   ["/dashboard/Calculator", <Calculator />, true],
   ["/dashboard/unauthorized", <UnAuthorized />, true],
-  ["/dashboard/barchart", <Dashboard />, true],
+  ["/dashboard/barchart", <Dashboard />, true, ["Administrator"]],
 ]
 
 const AppRoutes = () => {

@@ -1,5 +1,6 @@
 import { useFrappeAuth, useFrappeGetDoc, type AuthCredentials, type AuthResponse } from 'frappe-react-sdk'
 import React, { type ReactNode, type FC, createContext, useContext, useMemo, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 type Props = { children: ReactNode }
 
 interface UserDoc {
@@ -17,14 +18,15 @@ interface AppContext {
     docLoading: boolean
     hasRole: (role: string) => boolean
     userRoles: string[]
+    logout: () => Promise<any>
 }
 
 const AuthContext = createContext<AppContext | undefined>(undefined)
 
 // type User = string | null | undefined
-type UserRole = string[]
 const AuthContextProvider: FC<Props> = ({ children }) => {
-    const { currentUser, isLoading: authLoading, login } = useFrappeAuth()
+    const navigate = useNavigate()
+    const { currentUser, isLoading: authLoading, login ,logout:frappeLogout} = useFrappeAuth()
     const { data: userDetails, isLoading: docLoading } = useFrappeGetDoc(
         'User',
         currentUser ?? undefined
@@ -39,8 +41,14 @@ const AuthContextProvider: FC<Props> = ({ children }) => {
             return userRoles.includes(role)
 
         }, [userRoles])
+
+    const logout = async()=>{
+        await frappeLogout()
+        navigate("/dashboard/login")
+        
+    }
     return (
-        <AuthContext.Provider value={{ auth: currentUser ?? null, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
+        <AuthContext.Provider value={{ auth: currentUser ?? null, logout, userRoles, hasRole, authLoading, login, userDetails: userDetails ?? null, docLoading }}>
             {children}
         </AuthContext.Provider>
     )
