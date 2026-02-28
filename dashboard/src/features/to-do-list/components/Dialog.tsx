@@ -1,3 +1,4 @@
+import SelectDropdown from "@/components/commen/DropDown"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -14,16 +15,16 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { memo } from "react"
 interface DialogProps {
-    togglePopup: React.Dispatch<React.SetStateAction<boolean>>
-    data:string
+    togglePopup: () => void
+    data: any
+    open: boolean
 }
-function DialogDemo({ togglePopup, data }: DialogProps) {
+
+function DialogDemo({ togglePopup, data,open }: DialogProps) {
+    console.log(data)
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={(v) => !v && togglePopup()}>
             <form>
-                <DialogTrigger asChild>
-                    <Button variant="outline">Open Dialog</Button>
-                </DialogTrigger>
                 <DialogContent className="sm:max-w-sm">
                     <DialogHeader>
                         <DialogTitle>Edit profile</DialogTitle>
@@ -35,16 +36,20 @@ function DialogDemo({ togglePopup, data }: DialogProps) {
                     <FieldGroup>
                         <Field>
                             <Label htmlFor="name-1">Name</Label>
-                            <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+                            <SelectDropdown  />
                         </Field>
                         <Field>
-                            <Label htmlFor="username-1">Username</Label>
-                            <Input id="username-1" name="username" defaultValue="@peduarte" />
+                            <Label htmlFor="task-1">Task</Label>
+                            <Input
+                                id="task-1"
+                                name="name"
+                                defaultValue={data.title}
+                            />
                         </Field>
                     </FieldGroup>
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button onClick={()=>togglePopup(false)} variant="outline">Cancel</Button>
+                            <Button  variant="outline">Cancel</Button>
                         </DialogClose>
                         <Button type="submit">Save changes</Button>
                     </DialogFooter>

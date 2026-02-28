@@ -5,10 +5,15 @@ import { Edit, Loader2, Trash } from "lucide-react"
 import { useState } from "react"
 import { UpdateDialog } from "./components/Dialog"
 
+interface Task {
+    title:string
+    time?:string
+}
+
 const ToDo = () => {
     const [appStage, setAppStage] = useState("Pending")
     const { data, isLoading } = useGetToDo(appStage)
-    const [showDialog,setShowDialog] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const appState: string[] = [
         "Pending",
         "Completed"
@@ -35,6 +40,13 @@ const ToDo = () => {
                     <Button>Add Task</Button>
                 </div>
                 <div className="mt-6 overflow-x-auto">
+                    {selectedTask && (
+                        <UpdateDialog
+                            open={!!selectedTask}
+                            togglePopup={() => setSelectedTask(null)}
+                            data={selectedTask}
+                        />
+                    )}
                     <table className="w-full border-separate border-spacing-y-4 ">
                         <thead className="">
                             <tr>
@@ -69,10 +81,10 @@ const ToDo = () => {
                                         <td><Badge variant={`${task.status === "pending" ? "secondary":"destructive"}`}>{task.status}</Badge></td>
                                         <td>
                                             <div className="flex gap-4 justify-center">
-                                                <Edit onClick={()=>setShowDialog(true)} className="size-4 text-blue-600" />
+                                                <Edit onClick={() => setSelectedTask(task)} className="size-4 text-blue-600" />
                                                 <Trash className="size-4 text-red-600" />
                                             </div>
-                                            {showDialog && <UpdateDialog togglePopup={setShowDialog} data={task.title}/>}
+                                            
                                         </td>
                                     </tr>
                                 ))}
