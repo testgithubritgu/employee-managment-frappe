@@ -2,22 +2,18 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useGetToDo } from "@/hooks/useGetToDo"
 import { Edit, Loader2, Trash } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useState } from "react"
+import { UpdateDialog } from "./components/Dialog"
 
 const ToDo = () => {
     const [appStage, setAppStage] = useState("Pending")
     const { data, isLoading } = useGetToDo(appStage)
+    const [showDialog,setShowDialog] = useState(false)
     const appState: string[] = [
         "Pending",
         "Completed"
     ]
-    const taskArray = useMemo(() => (
-        [
-            { title: "draft project proposel", time: new Date().getTime() },
-            { title: "Take Trash Out", time: new Date().getTime() },
-            { title: "Get Groceries", time: new Date().getTime() }
-        ]
-    ), [])
+
 
     const onIconClicks = (e: any) => {
         console.log(e)
@@ -38,7 +34,6 @@ const ToDo = () => {
                     <span className="font-semibold text-2xl">Tasks</span>
                     <Button>Add Task</Button>
                 </div>
-                { }
                 <div className="mt-6 overflow-x-auto">
                     <table className="w-full border-separate border-spacing-y-4 ">
                         <thead className="">
@@ -69,14 +64,15 @@ const ToDo = () => {
                             {!isLoading &&
                                 data?.map((task: any, idx: number) => (
                                     <tr key={idx}>
-                                        <td>{task.name}</td>
+                                        <td>{task.title}</td>
                                         <td>{task.time}</td>
                                         <td><Badge variant={`${task.status === "pending" ? "secondary":"destructive"}`}>{task.status}</Badge></td>
                                         <td>
                                             <div className="flex gap-4 justify-center">
-                                                <Edit className="size-4 text-blue-600" />
+                                                <Edit onClick={()=>setShowDialog(true)} className="size-4 text-blue-600" />
                                                 <Trash className="size-4 text-red-600" />
                                             </div>
+                                            {showDialog && <UpdateDialog togglePopup={setShowDialog} data={task.title}/>}
                                         </td>
                                     </tr>
                                 ))}
