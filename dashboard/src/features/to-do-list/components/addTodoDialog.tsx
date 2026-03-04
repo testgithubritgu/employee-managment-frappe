@@ -7,19 +7,16 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function AddTodoDialog(){
+export default function AddTodoDialog({ showAddTodoPopup, togglPopup }: { showAddTodoPopup: boolean, togglPopup:()=>void}){
     return (
-        <Dialog>
+        <Dialog open={!!showAddTodoPopup} onOpenChange={(v) => !v && togglPopup()}>
             <form>
-                <DialogTrigger asChild>
-                    <Button variant="outline">Open Dialog</Button>
-                </DialogTrigger>
+                
                 <DialogContent className="sm:max-w-sm">
                     <DialogHeader>
                         <DialogTitle>Edit profile</DialogTitle>

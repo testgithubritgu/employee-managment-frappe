@@ -2,14 +2,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useGetToDo } from "@/hooks/useGetToDo"
 import { Edit, Loader2, Trash } from "lucide-react"
-import { lazy, useState } from "react"
+import {  useState } from "react"
 import { useDeleteTodo } from "@/hooks/useDeleteTodo"
-import { useQueryClient } from "@tanstack/react-query"
-import { AddTodoDialog } from "./components/addTodoDialog"
+import {useQueryClient } from "@tanstack/react-query"
+import  AddTodoDialog  from "./components/addTodoDialog"
+import { UpdateDialog } from "./components/Dialog"
 
 //lazy loading
-// const UpdateDialog = lazy(()=>import("./components/Dialog"));
-const UpdateDialog = lazy(() => import('./components/addTodoDialog'));
+
 interface Task {
     title: string
     time?: string
@@ -57,7 +57,7 @@ const ToDo = () => {
                     <span className="font-semibold text-2xl">Tasks</span>
                     <Button onClick={() => setShowAddTodoModel(true)}>Add Task</Button>
                 </div>
-                {showAddTodoModel && <AddTodoDialog />}
+                {showAddTodoModel && <AddTodoDialog showAddTodoPopup={showAddTodoModel} togglPopup={()=>setShowAddTodoModel(false)}/>}
                 <div className="mt-6 overflow-x-auto">
                     {selectedTask && (
                         <UpdateDialog
