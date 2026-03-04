@@ -2,11 +2,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useGetToDo } from "@/hooks/useGetToDo"
 import { Edit, Loader2, Trash } from "lucide-react"
-import { useState } from "react"
-import { UpdateDialog } from "./components/Dialog"
+import { lazy, useState } from "react"
 import { useDeleteTodo } from "@/hooks/useDeleteTodo"
 import { useQueryClient } from "@tanstack/react-query"
+import { AddTodoDialog } from "./components/addTodoDialog"
 
+//lazy loading
+// const UpdateDialog = lazy(()=>import("./components/Dialog"));
+const UpdateDialog = lazy(() => import('./components/addTodoDialog'));
 interface Task {
     title: string
     time?: string
@@ -16,6 +19,7 @@ const ToDo = () => {
     const [appStage, setAppStage] = useState("Pending")
     const [deletingId, setDeletingId] = useState<string | null>(null)
     const { data, isLoading } = useGetToDo(appStage)
+    const [showAddTodoModel,setShowAddTodoModel] = useState(false)
     const queryClient = useQueryClient()
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const appState: string[] = [
@@ -51,8 +55,9 @@ const ToDo = () => {
                 </div>
                 <div className="flex justify-between items-center w-full">
                     <span className="font-semibold text-2xl">Tasks</span>
-                    <Button>Add Task</Button>
+                    <Button onClick={() => setShowAddTodoModel(true)}>Add Task</Button>
                 </div>
+                {showAddTodoModel && <AddTodoDialog />}
                 <div className="mt-6 overflow-x-auto">
                     {selectedTask && (
                         <UpdateDialog
