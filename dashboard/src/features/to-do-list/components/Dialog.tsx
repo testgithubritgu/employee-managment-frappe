@@ -22,35 +22,35 @@ interface DialogProps {
 }
 
 
-function DialogDemo({ togglePopup, data,open }: DialogProps) {
+function DialogDemo({ togglePopup, data, open }: DialogProps) {
     const [category, setCategory] = useState("Pending");
     const options = [
         { value: "Pending", label: "Pending" },
         { value: "Completed", label: "Completed" },
     ];
-    const {mutate ,isPending} = useUpdateToDo()
+    const { mutate, isPending } = useUpdateToDo()
     const queryClient = useQueryClient()
-    const updateTask=()=>{
-        
-            mutate({
-                name:data.name,
-                status:category.toLowerCase()
-            },{
-                onSuccess:()=>{
-                    queryClient.invalidateQueries({ queryKey: ["my-todos"] })
-                    togglePopup()
-                },
-                onError:()=>{
-                    console.log("error occured in updating todo")
-                }
-            })
- 
+    const updateTask = () => {
+
+        mutate({
+            name: data.name,
+            status: category.toLowerCase()
+        }, {
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ["my-todos"] })
+                togglePopup()
+            },
+            onError: () => {
+                console.log("error occured in updating todo")
+            }
+        })
+
     }
-   
+
     useEffect(() => {
         const status = String(data?.status || "").toLowerCase()
         setCategory(status === "completed" ? "completed" : "pending")
-     
+
     }, [data?.status])
     return (
         <Dialog open={open} onOpenChange={(v) => !v && togglePopup()}>
@@ -80,9 +80,9 @@ function DialogDemo({ togglePopup, data,open }: DialogProps) {
                     </FieldGroup>
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button  variant="outline">Cancel</Button>
+                            <Button variant="outline">Cancel</Button>
                         </DialogClose>
-                        <Button onClick={() => updateTask()}>{isPending ? "saving...": "Save changes"}</Button>
+                        <Button onClick={() => updateTask()}>{isPending ? "saving..." : "Save changes"}</Button>
                     </DialogFooter>
                 </DialogContent>
             </form>

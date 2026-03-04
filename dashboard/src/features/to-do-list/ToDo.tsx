@@ -4,22 +4,40 @@ import { useGetToDo } from "@/hooks/useGetToDo"
 import { Edit, Loader2, Trash } from "lucide-react"
 import { useState } from "react"
 import { UpdateDialog } from "./components/Dialog"
+import { useDeleteTodo } from "@/hooks/useDeleteTodo"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface Task {
-    title:string
-    time?:string
+    title: string
+    time?: string
 }
 
 const ToDo = () => {
     const [appStage, setAppStage] = useState("Pending")
+    const [deletingId, setDeletingId] = useState<string | null>(null)
     const { data, isLoading } = useGetToDo(appStage)
+    const queryClient = useQueryClient()
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const appState: string[] = [
         "Pending",
         "Completed"
     ]
-
-
+    const { mutate: deleteTask } = useDeleteTodo()
+    const handleDelete = (name: string) => {
+        setDeletingId(name)
+        console.log("render problem in deleteTodo function")
+        deleteTask({
+            name
+        }, {
+            onSuccess: () => {
+                console.log("Task Deleted Successfully....")
+                queryClient.invalidateQueries({ queryKey: ['my-todos'] })
+            },
+            onSettled: () => {
+                setDeletingId(null)
+            }
+        })
+    }
     return (
         <>
             <div className="header flex items-center justify-center text-center text-white py-10 bg-linear-0 from-gray-600 via-gray-800 to-gray-900">
@@ -74,13 +92,19 @@ const ToDo = () => {
                                     <tr key={idx}>
                                         <td>{task.title}</td>
                                         <td>{task.time}</td>
-                                        <td><Badge variant={`${task.status === "pending" ? "secondary":"destructive"}`}>{task.status}</Badge></td>
+                                        <td><Badge variant={`${task.status === "pending" ? "secondary" : "destructive"}`}>{task.status}</Badge></td>
                                         <td>
                                             <div className="flex gap-4 justify-center">
                                                 <Edit onClick={() => setSelectedTask(task)} className="size-4 text-blue-600" />
-                                                <Trash className="size-4 text-red-600" />
+                                                {deletingId === task.name ? (
+                                                    <Loader2 className="size-4 animate-spin text-red-600" />
+                                                ) : (
+                                                    <Trash
+                                                        onClick={() => handleDelete(task.name)}
+                                                        className="size-4 text-red-600 cursor-pointer"
+                                                    />
+                                                )}
                                             </div>
-                                            
                                         </td>
                                     </tr>
                                 ))}
