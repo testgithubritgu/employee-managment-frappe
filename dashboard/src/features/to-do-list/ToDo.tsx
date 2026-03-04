@@ -20,10 +20,6 @@ const ToDo = () => {
     ]
 
 
-    const onIconClicks = (e: any) => {
-        console.log(e)
-    }
-    console.log(data)
     return (
         <>
             <div className="header flex items-center justify-center text-center text-white py-10 bg-linear-0 from-gray-600 via-gray-800 to-gray-900">
