@@ -8,20 +8,25 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { memo } from "react"
+import { memo, useState } from "react"
 interface DialogProps {
     togglePopup: () => void
     data: any
     open: boolean
 }
 
+
 function DialogDemo({ togglePopup, data,open }: DialogProps) {
-    console.log(data)
+    const [category, setCategory] = useState("");
+    const options = [
+        { value: "Pending", label: "Pending" },
+        { value: "Completed", label: "Completed" },
+    ];
+    console.log(category)
     return (
         <Dialog open={open} onOpenChange={(v) => !v && togglePopup()}>
             <form>
@@ -35,8 +40,9 @@ function DialogDemo({ togglePopup, data,open }: DialogProps) {
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
-                            <Label htmlFor="name-1">Name</Label>
-                            <SelectDropdown  />
+                            <SelectDropdown label='Country' className='md:w-full' options={options} selectedValue={category} onChange={(value) => { setCategory(value.value) }} />
+
+                            <p className="mt-4">Selected: {category}</p>
                         </Field>
                         <Field>
                             <Label htmlFor="task-1">Task</Label>
