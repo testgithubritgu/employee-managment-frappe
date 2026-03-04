@@ -74,7 +74,7 @@ export default function SelectDropdown({
                 "0 2px 8px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.08)",
             backgroundColor: "#FFFFFF",
             overflow: "hidden",
-
+            zIndex: 60,
         }),
     };
     return (
@@ -82,17 +82,15 @@ export default function SelectDropdown({
             <label className="block text-sm font-medium text-neutral-600" htmlFor="">{label}</label>
             <Select
                 name={name}
-                value={options.find((c: any) => c.label === selectedValue)}
+                value={options.find((c: any) => c.value === selectedValue)}
                 onChange={(option) => option && onChange(option)}
                 options={options}
-                onInputChange={(value) => {
-                    if (onInputChange) onInputChange(value);
-                }}
+                // onInputChange={(value) => {
+                //     if (onInputChange) onInputChange(value);
+                // }}
                 styles={{
                     ...customStyles,
-                    menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
                 }}
-                menuPortalTarget={document.body}
                 isSearchable={searchable}
                 // placeholder={options[0]?.label || "<--Select Category-->"}
                 className="z-9999"

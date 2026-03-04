@@ -12,7 +12,7 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { memo, useState } from "react"
+import { memo, useMemo, useState } from "react"
 interface DialogProps {
     togglePopup: () => void
     data: any
@@ -21,12 +21,15 @@ interface DialogProps {
 
 
 function DialogDemo({ togglePopup, data,open }: DialogProps) {
-    const [category, setCategory] = useState("");
+    const defaultStatus = useMemo(() => {
+        const status = String(data?.status || "").toLowerCase()
+        return status === "completed" ? "Completed" : "Pending"
+    }, [data?.status])
+    const [category, setCategory] = useState(defaultStatus);
     const options = [
         { value: "Pending", label: "Pending" },
         { value: "Completed", label: "Completed" },
     ];
-    console.log(category)
     return (
         <Dialog open={open} onOpenChange={(v) => !v && togglePopup()}>
             <form>
