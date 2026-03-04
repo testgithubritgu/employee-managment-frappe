@@ -12,6 +12,8 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useUpdateToDo } from "@/hooks/useUpdateToDo"
+import { useQueryClient } from "@tanstack/react-query"
 import { memo, useEffect, useState } from "react"
 interface DialogProps {
     togglePopup: () => void
@@ -26,10 +28,29 @@ function DialogDemo({ togglePopup, data,open }: DialogProps) {
         { value: "Pending", label: "Pending" },
         { value: "Completed", label: "Completed" },
     ];
-console.log(category)
+    const {mutate ,isPending} = useUpdateToDo()
+    const queryClient = useQueryClient()
+    const updateTask=()=>{
+        
+            mutate({
+                name:data.name,
+                status:category.toLowerCase()
+            },{
+                onSuccess:()=>{
+                    queryClient.invalidateQueries({ queryKey: ["my-todos"] })
+                    togglePopup()
+                },
+                onError:()=>{
+                    console.log("error occured in updating todo")
+                }
+            })
+ 
+    }
+   
     useEffect(() => {
         const status = String(data?.status || "").toLowerCase()
-        setCategory(status === "completed" ? "Completed" : "Pending")
+        setCategory(status === "completed" ? "completed" : "pending")
+     
     }, [data?.status])
     return (
         <Dialog open={open} onOpenChange={(v) => !v && togglePopup()}>
@@ -61,7 +82,7 @@ console.log(category)
                         <DialogClose asChild>
                             <Button  variant="outline">Cancel</Button>
                         </DialogClose>
-                        <Button type="submit">Save changes</Button>
+                        <Button onClick={() => updateTask()}>{isPending ? "saving...": "Save changes"}</Button>
                     </DialogFooter>
                 </DialogContent>
             </form>

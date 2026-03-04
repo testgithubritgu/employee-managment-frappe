@@ -7,7 +7,7 @@ const cacheData = {
 };
 export const useGetToDo = (status:string)=>{
     return useQuery({
-      queryKey: ["my-todos", status],
+      queryKey: ["my-todos", status.toLowerCase()],
       queryFn: () => getTodo(status),
       enabled: !!status,
       ...cacheData
