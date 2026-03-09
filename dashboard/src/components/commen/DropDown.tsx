@@ -8,7 +8,7 @@ interface optinosInterface {
     isDisabled?: boolean
 }
 interface ChildSelectDropdownProps {
-    selectedValue?: any;
+    selectedValue: any;
     onChange: (value: optinosInterface) => void;
     options: any;
     className?: any;

@@ -16,6 +16,7 @@ interface Task {
 }
 
 const ToDo = () => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const [appStage, setAppStage] = useState("Pending")
     const [deletingId, setDeletingId] = useState<string | null>(null)
     const { data, isLoading } = useGetToDo(appStage)
@@ -96,7 +97,7 @@ const ToDo = () => {
                                 data?.map((task: any, idx: number) => (
                                     <tr key={idx}>
                                         <td>{task.title}</td>
-                                        <td>{task.time}</td>
+                                        <td>{days[new Date(task.time).getDay()]}</td>
                                         <td><Badge variant={`${task.status === "pending" ? "secondary" : "destructive"}`}>{task.status}</Badge></td>
                                         <td>
                                             <div className="flex gap-4 justify-center">

@@ -3,7 +3,8 @@ import { FrappeAPI } from "@/lib/FrappeApi"
 
 export interface CreateTodoPayload {
     title:string,
-    status?:string
+    status?:string,
+    time:string
 }
 
 export interface TodoResponse {
