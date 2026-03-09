@@ -2,27 +2,18 @@ import AppRoutes from "./AppRoutes"
 import AuthContextProvider from "./context/AuthContext"
 import { Provider } from 'react-redux'
 import { store } from './app-store/store'
-import { useEffect, useState } from "react"
-import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar"
-import AppLayout from "./components/app-layout/AppLayout"
+import "nprogress/nprogress.css";
+import ProgressBar from "./components/ProgressBar";
 
 const App = () => {
-	const [progress, setProgress] = useState<number>(0);
-
-	useEffect(() => {
-		// Simulate progress
-		const timer = setTimeout(() => setProgress(100), 500);
-		return () => clearTimeout(timer);
-	}, []);
+	
 	return (
 		<>
 			<AuthContextProvider>
 				<Provider store={store}>
-				{/* <AppSidebar /> */}									
-				
-						
+					<ProgressBar />
+				{/* <AppSidebar /> */}															
 					<AppRoutes />
-					
 				</Provider>
 			</AuthContextProvider>
 		</>
