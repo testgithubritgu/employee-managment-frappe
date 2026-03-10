@@ -10,6 +10,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../services/firebase"
 import useDebounce from "../../hooks/useDebounce.js"
 import { Input } from "../../components/ui/input.js"
+import HeroSection from "../mouseEvent/MouseEvent.js"
 
 export const uploadImage = async (file: File) => {
   if (!file) throw new Error("No file");
@@ -106,6 +107,7 @@ const Home = () => {
       <Input onChange={(e) => setValue(Number(e.target.value) )} type="number" />
       <h1>this is without debounce: {value}</h1>
       <h1>this is debounced number : {valueDebounce}</h1>
+      <HeroSection />
     </div>
 
   )

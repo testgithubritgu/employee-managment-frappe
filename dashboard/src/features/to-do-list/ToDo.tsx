@@ -13,7 +13,7 @@ import { UpdateDialog } from "./components/Dialog"
 interface Task {
     title: string
     time?: string
-}
+} 
 
 const ToDo = () => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

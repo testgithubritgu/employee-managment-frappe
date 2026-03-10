@@ -4,6 +4,7 @@ import { useFrappeAuth } from "frappe-react-sdk"
 import ProtectedRoute from "./components/protect-route/ProtectedRoutes"
 import Navbar from "./components/commen/Navbar"
 import ToDo from "./features/to-do-list/ToDo"
+import EmployeeAttendance from "./features/EmployeeAttendance/EmployeeAttendance"
 
 // load lazy
 const Login = lazy(() => import("./features/login/Login"))
@@ -31,6 +32,7 @@ const pageRoute: RouteConfig = [
   ["/dashboard/unauthorized", <UnAuthorized />, true],
   ["/dashboard/barchart", <Dashboard />, true, ["Administrator"]],
   ["/dashboard/todo", <ToDo />, true],
+  ["/dashboard/employee-dashboard", <EmployeeAttendance />, true],
 ]
 
 const AppRoutes = () => {
